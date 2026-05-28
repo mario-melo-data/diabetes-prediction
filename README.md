@@ -14,8 +14,6 @@ This project predicts diabetes risk from the BRFSS 2015 Diabetes Health Indicato
 * **Class balance:** approximately 15.7% positive, a meaningful imbalance handled explicitly
 * **Split:** 80% training and 20% test, with standardisation fitted on the training data only to avoid leakage
 
-The data-loading, target conversion, subsampling, split, and standardisation pipeline were adapted from earlier group coursework (Mario Melo and Lynn Thalaal). All model implementation, training, validation, evaluation, and analysis are individual work.
-
 The raw dataset is not included in this repository. To run the notebook, download the data from the Kaggle page and provide it at the path the notebook expects.
 
 ## Approach
