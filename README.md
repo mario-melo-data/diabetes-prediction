@@ -11,7 +11,7 @@ This project predicts diabetes risk from the BRFSS 2015 Diabetes Health Indicato
 * **Source:** BRFSS 2015 Diabetes Health Indicators (Kaggle)
 * **Sample:** a stratified sample of 100,000 observations with 21 health indicators
 * **Target:** the original three-class label was converted into a binary target, healthy (0) versus pre-diabetes or diabetes (1), for screening-oriented classification
-* **Class balance:** approximately 15.7% positive, a meaningful imbalance handled explicitly
+* **Class balance:** approximately 15.7% positive, an imbalance handled explicitly
 * **Split:** 80% training and 20% test, with standardisation fitted on the training data only to avoid leakage
 
 The raw dataset is not included in this repository. To run the notebook, download the data from the Kaggle page and provide it at the path the notebook expects.
