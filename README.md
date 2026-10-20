@@ -22,14 +22,14 @@ Three models are trained and compared:
 
 1. **MLP without SMOTE.** A two-hidden-layer MLP (ReLU activations) trained on the imbalanced data as a baseline.
 2. **MLP with SMOTE.** The same architecture, with SMOTE oversampling applied only to the training folds to address imbalance without leaking into validation or test data.
-3. **Cost-sensitive SVM.** Linear and RBF kernels, with class weighting to reflect the cost of missing positive cases.
+3. **Cost-sensitive SVM.** Linear and RBF kernels compared, with class weighting to reflect the cost of missing positive cases; the linear kernel with C = 10 was selected on the hold-out validation split.
 
 Key methodology:
 
 * Hyperparameter selection for the MLP used 5-fold cross-validation with early stopping. The SVM was tuned on a single stratified hold-out split because full cross-validation was not computationally feasible on CPU, and this asymmetry is documented as a limitation.
 * SMOTE was applied inside training folds only, never on validation or test data.
 * The test set was held out and untouched during all model selection.
-* ROC-AUC was the primary selection metric because accuracy is misleading under imbalance. Recall, precision, F1, and confusion matrices were also reported to capture threshold-dependent behaviour.
+* ROC-AUC was the primary selection metric because accuracy is misleading under imbalance. Accuracy, recall and confusion matrices were also reported to capture threshold-dependent behaviour.
 
 ## Results
 
@@ -39,7 +39,7 @@ Key methodology:
 | MLP with SMOTE | 0.815 | 0.765 |
 | Cost-sensitive SVM | 0.813 | 0.781 |
 
-The three models reached almost identical ROC-AUC, yet their behaviour at the default threshold was completely different. The baseline MLP, despite the highest AUC, detected almost no positive cases (recall 0.079). Adding SMOTE left AUC essentially unchanged but raised recall to 0.765, and the cost-sensitive SVM behaved similarly (recall 0.781). This higher recall came at the cost of lower precision, which is an acceptable trade-off in a screening context where false negatives carry greater cost than false positives.
+The three models reached almost identical ROC-AUC, yet their behaviour at the default threshold was completely different. The baseline MLP, despite the highest AUC, detected almost no positive cases (recall 0.079). Adding SMOTE left AUC essentially unchanged but raised recall to 0.765, and the cost-sensitive SVM behaved similarly (recall 0.781). Higher recall came at the cost of lower precision: 0.337 for the SMOTE MLP and 0.327 for the class-weighted SVM, against 0.601 for the baseline MLP (calculated from the confusion matrices). In screening, a missed case usually costs more than a false positive, which favours the higher-recall models, although the relative costs were not quantified in this project.
 
 The main lesson is that similar ranking performance (AUC) can hide very different real-world behaviour at a fixed threshold, which is why metric choice must match the objective.
 
